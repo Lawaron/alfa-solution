@@ -30,14 +30,6 @@ test:
 	@echo "Running PHPUnit tests..."
 	$(DOCKER_COMPOSE_RUN) test
 
-coverage-report:
-	@echo "Generating code coverage report..."
-	$(DOCKER_COMPOSE_RUN) coverage-report
-
-mutation-report:
-	@echo "Generating mutation testing report..."
-	$(DOCKER_COMPOSE_RUN) mutation-report
-
 cs:
 	@echo "Checking code style (PHPCS)..."
 	$(DOCKER_COMPOSE_RUN) cs
@@ -45,3 +37,19 @@ cs:
 fix-cs:
 	@echo "Fixing code style (PHPCBF)..."
 	$(DOCKER_COMPOSE_RUN) fix-cs
+
+ci-build:
+	@echo "Generating build for CI..."
+	$(DOCKER_COMPOSE_BASE) build builder
+
+ci-install:
+	@echo "Installing dependencies for CI..."
+	$(DOCKER_COMPOSE_BASE) run --rm builder install --no-interaction --prefer-dist
+
+ci-coverage-report:
+	@echo "Generating code coverage report..."
+	$(DOCKER_COMPOSE_BASE) run --rm builder coverage-report
+
+ci-mutation-report:
+	@echo "Generating mutation testing report..."
+	$(DOCKER_COMPOSE_BASE) run --rm builder mutation-report
