@@ -23,11 +23,11 @@ jobs:
             - name: Run PHPUnit and Generate Coverage HTML
               run: |
                   mkdir -p build/coverage
-                  docker-compose exec -T builder coverage-report
+                  docker compose exec -T builder coverage-report
 
             - name: Run Infection and Generate HTML Report
               run: |
-                  docker-compose exec -T builder mutation-report
+                  docker compose exec -T builder mutation-report
 
             - name: Deploy Reports to gh-pages branch 🚀
               uses: peaceiris/actions-gh-pages@v3
