@@ -9,6 +9,8 @@
     "run-solution": "php bin/console.php",
     "run-original": "php run.php",
     "test": "phpunit --colors=always",
+    "coverage-report": "phpunit --colors=always --coverage-html build/coverage",
+    "mutation-report": "infection",
     "cs": "phpcs --standard=PSR12 src tests",
     "fix-cs": "phpcbf --standard=PSR12 src tests"
   },
@@ -24,6 +26,12 @@
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^4.0",
-    "phpunit/phpunit": "^12.4"
+    "phpunit/phpunit": "^12.4",
+    "infection/infection": "^0.31.2"
+  },
+  "config": {
+    "allow-plugins": {
+      "infection/extension-installer": true
+    }
   }
 }

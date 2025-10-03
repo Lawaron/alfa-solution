@@ -5,6 +5,8 @@
          colors="true"
          cacheDirectory=".phpunit.cache"
          testdox="true"
+         executionOrder="random"
+         resolveDependencies="true"
 >
     <testsuites>
         <testsuite name="Project Test Suite">

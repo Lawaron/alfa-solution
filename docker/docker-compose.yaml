@@ -7,6 +7,9 @@ services:
         HOST_UID: ${HOST_UID}
         GROUP_ID: ${HOST_GID}
     container_name: app
+    environment:
+      XDEBUG_MODE: debug,develop,coverage
+      XDEBUG_CONFIG: "client_host=host.docker.internal"
     volumes:
       - ../app:/app
     tty: true

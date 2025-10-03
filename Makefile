@@ -30,6 +30,14 @@ test:
 	@echo "Running PHPUnit tests..."
 	$(DOCKER_COMPOSE_RUN) test
 
+coverage-report:
+	@echo "Generating code coverage report..."
+	$(DOCKER_COMPOSE_RUN) coverage-report
+
+mutation-report:
+	@echo "Generating mutation testing report..."
+	$(DOCKER_COMPOSE_RUN) mutation-report
+
 cs:
 	@echo "Checking code style (PHPCS)..."
 	$(DOCKER_COMPOSE_RUN) cs

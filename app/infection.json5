@@ -1,0 +1,10 @@
+{
+  source: {
+    directories: ["src"],
+  },
+  timeout: 10,
+  threads: "max",
+  logs: {
+    html: "build/mutation-report.html",
+  },
+}

@@ -8,6 +8,9 @@ COPY --from=mlocati/php-extension-installer \
     /usr/bin/install-php-extensions \
     /usr/bin
 
+RUN install-php-extensions \
+    xdebug
+
 COPY --from=composer:latest \
     /usr/bin/composer \
     /usr/bin/composer
