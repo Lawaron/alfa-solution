@@ -7,15 +7,22 @@
   },
   "scripts": {
     "run-original": "php run.php",
-    "cs": "phpcs --standard=PSR12 src",
-    "fix-cs": "phpcbf --standard=PSR12 src"
+    "test": "phpunit --colors=always",
+    "cs": "phpcs --standard=PSR12 src tests",
+    "fix-cs": "phpcbf --standard=PSR12 src tests"
   },
   "autoload": {
     "psr-4": {
       "Alfa\\Interview\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^4.0"
+    "squizlabs/php_codesniffer": "^4.0",
+    "phpunit/phpunit": "^12.4"
   }
 }
