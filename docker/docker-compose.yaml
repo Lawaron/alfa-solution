@@ -1,8 +1,16 @@
 services:
+  builder:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      target: build
+    volumes:
+      - ../app:/app
   app:
     build:
       context: ../
       dockerfile: docker/Dockerfile
+      target: dev
       args:
         HOST_UID: ${HOST_UID}
         GROUP_ID: ${HOST_GID}
