@@ -4,6 +4,8 @@ services:
       context: ../
       dockerfile: docker/Dockerfile
       target: build
+    environment:
+      XDEBUG_MODE: coverage
     volumes:
       - ../app:/app
   app:
