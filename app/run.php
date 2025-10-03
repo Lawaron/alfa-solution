@@ -13,4 +13,4 @@ $calculator = new InsuranceCalculator(
     $offerClient
 );
 
-echo $calculator->calculate();
+echo $calculator->calculate() . "\n";

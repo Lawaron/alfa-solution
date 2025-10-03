@@ -6,6 +6,7 @@
     "php": "^8.3"
   },
   "scripts": {
+    "run-solution": "php bin/console.php",
     "run-original": "php run.php",
     "test": "phpunit --colors=always",
     "cs": "phpcs --standard=PSR12 src tests",
