@@ -1,0 +1,37 @@
+name: CI / Reports Generation
+
+on:
+    push:
+        branches: ["main", "reports"]
+    pull_request:
+        branches: ["main", "reports"]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout kód
+              uses: actions/checkout@v4
+
+            - name: Build and Run Docker Containers 🐳
+              run: docker compose -f docker/docker-compose.yaml build app
+
+            - name: Install Composer Dependencies
+              run: docker compose -f docker/docker-compose.yaml run --rm app install --no-interaction --prefer-dist
+
+            - name: Run PHPUnit and Generate Coverage HTML
+              run: |
+                  mkdir -p build/coverage
+                  docker-compose exec -T app vendor/bin/phpunit --coverage-html build/coverage
+
+            - name: Run Infection and Generate HTML Report
+              run: |
+                  docker-compose exec -T app vendor/bin/infection --coverage-path build/coverage --log-verbosity=default --only-covered --html-log build/mutation-report.html
+
+            - name: Deploy Reports to gh-pages branch 🚀
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./app/build
+                  destination_dir: reports
