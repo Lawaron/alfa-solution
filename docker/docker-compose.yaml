@@ -14,8 +14,8 @@ services:
       dockerfile: docker/Dockerfile
       target: dev
       args:
-        HOST_UID: ${HOST_UID}
-        GROUP_ID: ${HOST_GID}
+        HOST_UID: ${HOST_UID-1000}
+        GROUP_ID: ${HOST_GID-1000}
     container_name: app
     environment:
       XDEBUG_MODE: debug,develop,coverage
