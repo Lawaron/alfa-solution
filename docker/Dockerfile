@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.3-cli AS base
 
 RUN apt-get update && \
     apt-get install -y git unzip libzip-dev && \
@@ -15,6 +15,22 @@ COPY --from=composer:latest \
     /usr/bin/composer \
     /usr/bin/composer
 
+ENTRYPOINT [ "composer" ]
+
+CMD [ "list" ]
+
+FROM base AS build
+
+WORKDIR /app
+
+COPY app/composer.json app/composer.lock ./
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction
+
+COPY app/ .
+
+FROM base AS dev
+
 ARG USER_ID=1000
 ARG GROUP_ID=1000
 
@@ -25,7 +41,3 @@ RUN groupadd -g ${GROUP_ID} developer && \
 USER developer
 
 WORKDIR /app
-
-ENTRYPOINT [ "composer" ]
-
-CMD [ "list" ]
