@@ -19,7 +19,7 @@ class AdditionalTypeTest extends TestCase
     }
 
     #[
-        TestDox('AdditionalType has correct values'),
+        TestDox('AdditionalType has correct value'),
         DataProvider('valuesProvider')
     ]
     public function testValues(AdditionalType $type, int $expected): void

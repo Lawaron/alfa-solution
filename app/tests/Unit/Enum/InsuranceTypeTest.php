@@ -19,7 +19,7 @@ class InsuranceTypeTest extends TestCase
     }
 
     #[
-        TestDox('InsuranceType has correct values'),
+        TestDox('InsuranceType has correct value'),
         DataProvider('valuesProvider')
     ]
     public function testValues(InsuranceType $type, int $expected): void
