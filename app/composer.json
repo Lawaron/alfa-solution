@@ -1,0 +1,16 @@
+{
+  "name": "alfa/interview",
+  "description": "Interview exercise for PHP developers: refactor and improve an insurance calculator.",
+  "type": "project",
+  "require": {
+    "php": "^8.3"
+  },
+  "scripts": {
+    "run-original": "php run.php"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alfa\\Interview\\": "src/"
+    }
+  }
+}

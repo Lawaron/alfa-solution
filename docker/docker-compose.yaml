@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+      args:
+        HOST_UID: ${HOST_UID}
+        GROUP_ID: ${HOST_GID}
+    container_name: app
+    volumes:
+      - ../app:/app
+    tty: true
+    stdin_open: true
