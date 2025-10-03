@@ -6,11 +6,16 @@
     "php": "^8.3"
   },
   "scripts": {
-    "run-original": "php run.php"
+    "run-original": "php run.php",
+    "cs": "phpcs --standard=PSR12 src",
+    "fix-cs": "phpcbf --standard=PSR12 src"
   },
   "autoload": {
     "psr-4": {
       "Alfa\\Interview\\": "src/"
     }
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^4.0"
   }
 }

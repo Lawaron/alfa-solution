@@ -16,11 +16,10 @@ class InsuranceCalculator
     ];
 
     public function __construct(
-        private readonly string      $insuranceType,
-        private readonly array       $additionals,
+        private readonly string $insuranceType,
+        private readonly array $additionals,
         private readonly OfferClient $client
-    )
-    {
+    ) {
     }
 
     public function calculate(): int
