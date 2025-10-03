@@ -2,9 +2,9 @@ name: CI / Reports Generation
 
 on:
     push:
-        branches: ["main", "reports"]
+        branches: ["main"]
     pull_request:
-        branches: ["main", "reports"]
+        branches: ["main"]
 
 jobs:
     build-and-test:
