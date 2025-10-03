@@ -23,11 +23,11 @@ FROM base AS build
 
 WORKDIR /app
 
-COPY composer.json composer.lock ./
+COPY app/composer.json app/composer.lock ./
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-COPY . .
+COPY app/ .
 
 FROM base AS dev
 
