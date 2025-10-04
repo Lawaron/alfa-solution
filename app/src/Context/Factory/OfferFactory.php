@@ -16,9 +16,9 @@ class OfferFactory
 
         $offer = new Offer(Id::generate(), $insurance);
 
-        foreach ($additionals as $additional) {
+        foreach (array_unique($additionals) as $additional) {
             $type = AdditionalType::fromName($additional);
-            $offer->addAdditional(new Additional($type));
+            $offer->addAdditional($type);
         }
 
         return $offer;

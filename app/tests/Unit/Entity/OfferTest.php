@@ -6,7 +6,7 @@ namespace Tests\Unit\Context\Entity;
 
 use Alfa\Interview\Context\Entity\Offer;
 use Alfa\Interview\Context\Enum\{AdditionalType, InsuranceType};
-use Alfa\Interview\Context\ValueObject\{Additional, Id, Insurance};
+use Alfa\Interview\Context\ValueObject\{Id, Insurance, Price};
 use PHPUnit\Framework\Attributes\{DataProvider, TestDox, TestWith};
 use PHPUnit\Framework\TestCase;
 
@@ -20,93 +20,36 @@ final class OfferTest extends TestCase
         $insuranceCasco = new Insurance(InsuranceType::Casco);
         $insuranceUnknown = new Insurance(InsuranceType::Unknown);
 
-        $additionalDog = new Additional(AdditionalType::Dog);
-        $additionalTravel = new Additional(AdditionalType::Travel);
-        $additionalUnknown = new Additional(AdditionalType::Unknown);
-
         return [
             "no additionals" => [
-                "expectedAdditionalNames" => [],
-                "expectedTotalPrice" => $insuranceFlat->price->ammount,
-                "offer" => new Offer($id, $insuranceFlat)
+                new Price(100),
+                new Offer($id, $insuranceFlat)
             ],
             "a single additional" => [
-                "expectedAdditionalNames" => ["dog"],
-                "expectedTotalPrice" => $insuranceFlat->price->ammount
-                    + $additionalDog->price->ammount,
-                "offer" => (new Offer($id, $insuranceFlat))
-                    ->addAdditional($additionalDog)
+                new Price(150),
+                (new Offer($id, $insuranceFlat))
+                    ->addAdditional(AdditionalType::Dog)
             ],
             "more additionals" => [
-                "expectedAdditionalNames" => ["dog", "travel"],
-                "expectedTotalPrice" => $insuranceCasco->price->ammount
-                    + $additionalDog->price->ammount
-                    + $additionalTravel->price->ammount,
-                "offer" => (new Offer($id, $insuranceCasco))
-                    ->addAdditional($additionalDog)
-                    ->addAdditional($additionalTravel)
-            ],
-            "repetitive additionals" => [
-                "expectedAdditionalNames" => ["dog"],
-                "expectedTotalPrice" => $insuranceCasco->price->ammount
-                    + $additionalDog->price->ammount,
-                "offer" => (new Offer($id, $insuranceCasco))
-                    ->addAdditional($additionalDog)
-                    ->addAdditional($additionalDog)
+                new Price(350),
+                (new Offer($id, $insuranceCasco))
+                    ->addAdditional(AdditionalType::Dog)
+                    ->addAdditional(AdditionalType::Travel)
             ],
             "unknown insurance and additional" => [
-                "expectedAdditionalNames" => ["unknown"],
-                "expectedTotalPrice" => 0,
-                "offer" => (new Offer($id, $insuranceUnknown))
-                    ->addAdditional($additionalUnknown)
+                new Price(0),
+                (new Offer($id, $insuranceUnknown))
+                    ->addAdditional(AdditionalType::Unknown)
             ],
         ];
     }
 
-    public static function additionalNamesProvider(): array
-    {
-        return array_map(
-            fn (array $data): array => [$data["expectedAdditionalNames"], $data["offer"]],
-            self::offerProvider()
-        );
-    }
-
-    #[
-        TestDox('Get additional names of offer is correct'),
-        DataProvider('additionalNamesProvider')
-    ]
-    public function testGetAdditionalNames(array $expected, Offer $offer): void
-    {
-        $this->assertEquals($expected, $offer->getAdditionalNames());
-    }
-
-    public static function totalPriceProvider(): array
-    {
-        return array_map(
-            fn (array $data): array => [$data["expectedTotalPrice"], $data["offer"]],
-            self::offerProvider()
-        );
-    }
-
     #[
         TestDox('Get total price of offer is correct'),
-        DataProvider('totalPriceProvider')
+        DataProvider('offerProvider')
     ]
-    public function testGetTotalPrice(int $expected, Offer $offer): void
+    public function testGetTotalPrice(Price $expected, Offer $offer): void
     {
-        $this->assertEquals($expected, $offer->getTotalPrice()->ammount);
-    }
-
-    #[
-        TestDox('Get type of offer is correct with type $expected'),
-        TestWith(['flat', InsuranceType::Flat]),
-        TestWith(['casco', InsuranceType::Casco]),
-        TestWith(['unknown', InsuranceType::Unknown]),
-    ]
-    public function testGetType(string $expected, InsuranceType $type): void
-    {
-        $offer = new Offer(Id::generate(), new Insurance($type));
-
-        $this->assertEquals($expected, $offer->getType());
+        $this->assertEquals($expected, $offer->getTotalPrice());
     }
 }

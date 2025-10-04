@@ -8,10 +8,8 @@ trait CanTryFromName
 {
     public static function tryFromName(string $name): self|null
     {
-        $searchName = strtoupper($name);
-
         foreach (self::cases() as $case) {
-            if (strtoupper($case->name) === $searchName) {
+            if (strtolower($case->name) === strtolower($name)) {
                 return $case;
             }
         }

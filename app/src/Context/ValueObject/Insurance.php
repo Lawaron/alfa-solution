@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace Alfa\Interview\Context\ValueObject;
 
 use Alfa\Interview\Context\Enum\InsuranceType;
+use Alfa\Interview\Context\Interface\HasPrice;
 
-class Insurance
+class Insurance implements HasPrice
 {
-    public readonly string $type;
-    public readonly Price $price;
+    public function __construct(
+        private readonly InsuranceType $type
+    ) {
+    }
 
-    public function __construct(InsuranceType $type)
+    public function getPrice(): Price
     {
-        $this->type = strtolower($type->name);
-        $this->price = new Price($type->value);
+        return new Price($this->type->value);
     }
 }
